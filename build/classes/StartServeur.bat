@@ -1,0 +1,1 @@
+java -Djava.security.policy=fichier.policy lan_chat_client.Server
