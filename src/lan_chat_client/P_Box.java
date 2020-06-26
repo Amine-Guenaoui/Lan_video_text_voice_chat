@@ -15,7 +15,7 @@ public class P_Box implements Serializable{
     //private box 
     private int id;
     private String name;
-
+    private String file_name;
     public String getName() {
         return name;
     }
@@ -30,6 +30,7 @@ public class P_Box implements Serializable{
         concerned_messages = new LinkedList<String>();
         this.name = name;
         modif = false;
+        file_name = "";
     }
     
     public void add_message(String msg ,User user){
@@ -72,6 +73,14 @@ public class P_Box implements Serializable{
                 System.out.println(user.getName()+" has been removed from "+this.name);
             }
         }
+    }
+    
+    public void set_shared_file_name(String name){
+        file_name = name;
+    }
+    
+    public String get_shared_file_name(){
+        return file_name;
     }
     
     public int getId() {
