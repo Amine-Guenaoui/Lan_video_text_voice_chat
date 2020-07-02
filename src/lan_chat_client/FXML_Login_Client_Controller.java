@@ -38,8 +38,10 @@ public class FXML_Login_Client_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // getting object 
-         try {
-            stub = Naming.lookup("Chat_logger");
+        String location = "rmi://192.168.1.4:1099/"; 
+        try {
+            
+            stub = Naming.lookup(location+"Chat_logger");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Notes");
             System.out.println(stub);
         } catch (Exception ex) {
@@ -70,6 +72,8 @@ public class FXML_Login_Client_Controller implements Initializable {
             stage.setTitle("Lan Chat Client");
             stage.setScene(new Scene(root1));  
             stage.show();
+            Stage current = (Stage)logger_name.getScene().getWindow();
+            current.close();
         } catch (Exception e){
             e.printStackTrace();
         }

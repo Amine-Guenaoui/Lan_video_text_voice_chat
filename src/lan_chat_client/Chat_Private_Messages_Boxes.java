@@ -48,7 +48,7 @@ public class Chat_Private_Messages_Boxes extends UnicastRemoteObject implements 
                     for (P_Box temp2: already_joined_boxes){
 
                         if(temp.getId() == temp2.getId()){
-                            System.out.println("already joined ");
+                            System.out.println(user.getName()+" already joined box :" +temp2.getName());
                             break;
                         }else{
                             box_temp_list.add(temp);
@@ -99,7 +99,12 @@ public class Chat_Private_Messages_Boxes extends UnicastRemoteObject implements 
                 System.out.println("the box "+temp.getName()+" has been updated");
                 
             }
+            if(temp.getConcerned_users().size()<2){
+                boxes_list.remove(temp);
+                System.out.println("the box "+temp.getName()+" has been removed num_users="+temp.getConcerned_users().size());
+            }
         }
+        
     }
 
     @Override

@@ -24,5 +24,6 @@
       <TextField fx:id="choosen_file_path" editable="false" layoutX="96.0" layoutY="582.0" prefHeight="25.0" prefWidth="483.0" promptText="path of the chose file" />
       <Button layoutX="651.0" layoutY="528.0" mnemonicParsing="false" onAction="#download_attached_file" prefHeight="25.0" prefWidth="200.0" text="download attached files" />
       <Button layoutX="36.0" layoutY="625.0" mnemonicParsing="false" onAction="#upload_attached_file" text="attach" />
+      <Button layoutX="264.0" layoutY="625.0" mnemonicParsing="false" onAction="#video_call" prefHeight="25.0" prefWidth="315.0" text="video call " />
    </children>
 </AnchorPane>

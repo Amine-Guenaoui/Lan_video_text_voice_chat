@@ -8,7 +8,6 @@ package lan_chat_client;
 import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -20,6 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
@@ -61,8 +62,9 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
         my_not_opened_boxes = new LinkedList<P_Box>();
         me = FXML_Login_Client_Controller.me;
         user_name_text.setText(user_name_text.getText()+" "+me.getName());
+        String location = "rmi://192.168.1.4:1099/"; 
         try {
-            logger_stub = Naming.lookup("Chat_logger");
+            logger_stub = Naming.lookup(location+"Chat_logger");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_logger");
             System.out.println(logger_stub);
             
@@ -72,7 +74,7 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
             System.exit(0);
         }
         try {
-             messages_stub = Naming.lookup("Chat_Messages_Handler");
+             messages_stub = Naming.lookup(location+"Chat_Messages_Handler");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_Messages_Handler");
             System.out.println(messages_stub);
         } catch (Exception ex) {
@@ -81,7 +83,7 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
         }
         // getting private chat boxes if the user is concerned 
         try {
-            chat_boxes = Naming.lookup("Chat_Private_Messages_Boxes");
+            chat_boxes = Naming.lookup(location+"Chat_Private_Messages_Boxes");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_Messages_Handler");
             System.out.println(chat_boxes);
         } catch (Exception ex) {
@@ -136,7 +138,9 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
                     try {
                         LinkedList<P_Box> tmp;
                         if(box_class.isModif()){
+                            // retrieve the boxes that you joined to ur base
                             tmp = box_class.verifyExistence(me, my_boxes);
+                            //add those boxes that you didn't add to ur base
                             for (P_Box box : tmp){
                                 //create a window for box 
                                 System.out.println(" joining "+ box.getName() + " box");
@@ -200,7 +204,7 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
                             System.exit(1);
                         }
                     }
-                    //System.exit(0);
+                    System.exit(0);
                     } catch (Exception ex) {
                         System.out.println("Error !");
                         ex.printStackTrace();
@@ -212,25 +216,41 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
     @FXML
     private void create_private_box(ActionEvent event) {
         //selected users from logged in users 
+        boolean error=false;
         ObservableList<User> selectedUsers =  logged_isers_list_view.getSelectionModel().getSelectedItems();
         LinkedList<User> concerned_users = new LinkedList<User>();
         concerned_users.add(me); // the creator
         for (User user : selectedUsers){
             //fetching concerned users
             System.out.println(user.getName()+" has been selected");
+            if(user.getId() == me.getId()) {
+                error=true;
+                break;
+            }
             concerned_users.add(user);
         }
+        if(error){
+            Alert a = new Alert(AlertType.ERROR); 
+  
+                // set content text 
+                a.setContentText("You shouldn't select yourself (auto selected)"); 
+  
+                // show the dialog 
+                a.show();
+        }else{
         if (chat_boxes instanceof Chat_Private_Messages_Boxes_Int ){
             Chat_Private_Messages_Boxes_Int box_class = (Chat_Private_Messages_Boxes_Int)chat_boxes;
             try {
 
                 if(!box_class.isModif()){
                     box_class.createPrivateBox(concerned_users, me.getName()+" Box");
-                }} catch (Exception ex) {
+                }
+            } catch (Exception ex) {
                 System.out.println("Error !");
                 ex.printStackTrace();
                 System.exit(1);
             }
+        }
         }
     }
     

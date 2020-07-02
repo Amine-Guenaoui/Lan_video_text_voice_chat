@@ -6,15 +6,20 @@
 package lan_chat_client;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -29,7 +34,7 @@ import javafx.stage.Stage;
  */
 public class Private_Messages_Box_Interface_Controller implements Initializable {
 
-    P_Box self_box;
+    public static P_Box self_box;
     User me;
     Remote chat_boxes;
     Remote chat_file;
@@ -53,28 +58,20 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         me = FXML_Login_Client_Controller.me;
-        self_box = Lan_Chat_Main_Interface_Controller.my_not_opened_boxes.remove();
+        self_box = Lan_Chat_Main_Interface_Controller.my_not_opened_boxes.remove();// removing from not opened boxes
+        //Lan_Chat_Main_Interface_Controller.my_not_opened_boxes.add(self_box); // adding to already opened boxes
         p_box_title_text.setText(p_box_title_text.getText()+" "+self_box.getName());
+        String location = "rmi://192.168.1.4:1099/"; 
         for (User user :self_box.getConcerned_users()){
                         private_box_users_list_view.getItems().add(user);
         }
         
-        download_path = "";
+        download_path = "downloads/";
         // getting private chat boxes if the user is concerned 
         try {
-            chat_boxes = Naming.lookup("Chat_Private_Messages_Boxes");
+            chat_boxes = Naming.lookup(location+"Chat_Private_Messages_Boxes");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_Messages_Handler");
             System.out.println(chat_boxes);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(0);
-        }
-        
-        // getting file sharer 
-        try {
-            chat_file = Naming.lookup("Chat_File_Sharer");
-            //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_Messages_Handler");
-            System.out.println(chat_file);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.exit(0);
@@ -87,6 +84,11 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
                         Chat_Private_Messages_Boxes_Int box_class = (Chat_Private_Messages_Boxes_Int)chat_boxes;
                         try {
                             self_box = box_class.get_p_box(self_box);
+                            if(self_box.getConcerned_users().size() < 2){
+                                box_class.removePrivateBox(self_box);
+                                Stage current = (Stage)private_box_users_list_view.getScene().getWindow();
+                                current.close();
+                            }
                             if(self_box.isModif()){
                                 private_box_text_area.setText("");
                                 private_box_text_area.setText(self_box.get_messages());
@@ -125,9 +127,9 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
                 self_box = box_class.get_p_box(self_box);
                 self_box.remove_user(me);
                 self_box.add_message(" has disconnected from "+self_box.getName(), me);
+                box_class.update_box(self_box);
                 Stage stage = (Stage) private_box_text_field.getScene().getWindow();
                 stage.close();
-                box_class.update_box(self_box);
                 private_box_text_field.setText("");
             } catch (Exception ex) {
                         System.out.println("in sending message !");
@@ -186,16 +188,19 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
     @FXML
     private void download_attached_file(ActionEvent event) {
     
-        
+        String file_path=download_path;
         //getting file name 
         if (chat_boxes instanceof Chat_Private_Messages_Boxes_Int ){
             Chat_Private_Messages_Boxes_Int box_class = (Chat_Private_Messages_Boxes_Int)chat_boxes;
             try {
                 self_box = box_class.get_p_box(self_box);
                 
-                download_path = self_box.get_shared_file_name();
-                System.out.println("download path :"+ download_path);
-                
+                file_path += self_box.get_shared_file_name();
+                System.out.println("download path :"+ file_path);
+                byte[] file_content= self_box.download_file();
+                Files.write( Paths.get(file_path) ,//StandardCharsets.UTF_8
+                       file_content,
+                       StandardOpenOption.CREATE);
             } catch (Exception ex) {
                         System.out.println("in file name can't be set !");
                         ex.printStackTrace();
@@ -203,20 +208,6 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
             }
         }
         
-        if (chat_file instanceof Chat_File_Sharer_Int ){
-            Chat_File_Sharer_Int file_class = (Chat_File_Sharer_Int)chat_file;
-            try {
-               String file_content= file_class.download_file();
-               FileOutputStream fos = new FileOutputStream(download_path);
-               fos.write(file_content.getBytes());
-               fos.flush();
-               fos.close();
-            } catch (Exception ex) {
-                        System.out.println(" can't download file !");
-                        ex.printStackTrace();
-                        
-            }
-        }
         
     }
 
@@ -224,15 +215,44 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
     private void upload_attached_file(ActionEvent event) {
     
         
-        if (chat_file instanceof Chat_File_Sharer_Int ){
-            Chat_File_Sharer_Int file_class = (Chat_File_Sharer_Int)chat_file;
+     
+      if (chat_boxes instanceof Chat_Private_Messages_Boxes_Int ){
+            Chat_Private_Messages_Boxes_Int box_class = (Chat_Private_Messages_Boxes_Int)chat_boxes;
             try {
-                file_class.upload_file(selected_file);
+                self_box = box_class.get_p_box(self_box);
+                byte[] content = Files.readAllBytes(selected_file.toPath());
+                self_box.add_message("have uploaded "+selected_file.getName()+",\n "+selected_file.length()+" octets , \npress download to download it  ", me);
+                self_box.upload_file(content,selected_file.getName());
+                box_class.update_box(self_box);
             } catch (Exception ex) {
-                        System.out.println(" can't upload file !");
+                        System.out.println("in file name can't be set !");
                         ex.printStackTrace();
                         System.exit(1);
             }
+        }
+     
+    }
+
+    @FXML
+    private void video_call(ActionEvent event) {
+    
+        System.out.println("requesting a video call from them");
+        //rmi video call condition verify if yes open a new window else do nothing such thing anywayt
+        create_video_share_window();
+    }
+    
+    public void create_video_share_window(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Private_Video_Sharing_Interface.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+//            stage.initModality(Modality.NONE);
+//            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle(me.getName()+"'s Private Video Sharing");
+            stage.setScene(new Scene(root1));  
+            stage.show();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
     

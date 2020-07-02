@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="828.0" prefWidth="824.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lan_chat_client.Private_Video_Sharing_Interface_Controller">
+   <children>
+      <ImageView fx:id="image_view_user_him" fitHeight="782.0" fitWidth="910.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Pictures/profile_place_holder.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="31.0" layoutY="778.0" mnemonicParsing="false" onAction="#exit" text="close" />
+      <ImageView fx:id="image_view_user_me" fitHeight="263.0" fitWidth="279.0" layoutX="515.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.5;" />
+   </children>
+</AnchorPane>
