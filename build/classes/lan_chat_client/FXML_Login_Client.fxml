@@ -2,18 +2,29 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="446.0" prefWidth="560.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lan_chat_client.FXML_Login_Client_Controller">
+<AnchorPane id="AnchorPane" prefHeight="446.0" prefWidth="560.0" styleClass="anchor" stylesheets="@../login_style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lan_chat_client.FXML_Login_Client_Controller">
     <children>
-        <Button layoutX="257.0" layoutY="380.0" onAction="#login_client" text="Login" />
-      <TextField fx:id="logger_name" layoutX="206.0" layoutY="314.0" promptText="Enter your name" />
-      <Text fill="#d32525" layoutX="167.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lan Chat Client">
+        <Button layoutX="226.0" layoutY="362.0" onAction="#login_client" styleClass="ipad-dark-grey" stylesheets="@../login_style.css" text="Login">
+         <effect>
+            <DropShadow spread="0.84" />
+         </effect></Button>
+      <TextField fx:id="logger_name" layoutX="206.0" layoutY="314.0" promptText="Enter your name" styleClass="text-field" stylesheets="@../login_style.css">
+         <effect>
+            <DropShadow spread="0.17" />
+         </effect></TextField>
+      <Text fill="WHITE" layoutX="167.0" layoutY="174.0" stroke="#1a1212df" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="19.0" text="Lan Chat Client">
          <font>
             <Font size="34.0" />
          </font>
+         <effect>
+            <Glow level="1.0" />
+         </effect>
       </Text>
     </children>
 </AnchorPane>

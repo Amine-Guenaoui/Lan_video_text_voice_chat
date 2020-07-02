@@ -4,24 +4,28 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="774.0" prefWidth="972.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lan_chat_client.Lan_Chat_Main_Interface_Controller">
+<AnchorPane id="AnchorPane" prefHeight="774.0" prefWidth="972.0" style="-fx-background-color: black;" styleClass="anchor" stylesheets="@../login_style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lan_chat_client.Lan_Chat_Main_Interface_Controller">
    <children>
-      <Text fill="#f20606" layoutX="366.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lan Chat Client">
+      <Text fill="WHITE" layoutX="366.0" layoutY="72.0" stroke="#0d0808bb" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="18.0" text="Lan Chat Client">
          <font>
             <Font size="36.0" />
          </font>
+         <effect>
+            <Glow level="0.88" />
+         </effect>
       </Text>
-      <TextArea fx:id="user_chat_box_text_area" layoutX="51.0" layoutY="109.0" prefHeight="461.0" prefWidth="654.0" promptText="Chat texts will be here" />
-      <ListView fx:id="logged_isers_list_view" layoutX="723.0" layoutY="109.0" prefHeight="461.0" prefWidth="200.0" />
-      <Button layoutX="51.0" layoutY="589.0" mnemonicParsing="false" onAction="#send_message" text="Send" />
-      <Button layoutX="867.0" layoutY="729.0" mnemonicParsing="false" onAction="#log_off" text="Log Off" />
-      <TextField fx:id="user_message" layoutX="102.0" layoutY="589.0" prefHeight="25.0" prefWidth="603.0" promptText="Enter your message here" />
-      <Button layoutX="723.0" layoutY="589.0" mnemonicParsing="false" onAction="#create_private_box" text="create private box" />
-      <Text fx:id="user_name_text" fill="WHITE" layoutX="51.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome : ">
+      <TextArea fx:id="user_chat_box_text_area" layoutX="51.0" layoutY="109.0" prefHeight="461.0" prefWidth="654.0" promptText="Chat texts will be here" styleClass="text-area" stylesheets="@../login_style.css" />
+      <ListView fx:id="logged_isers_list_view" layoutX="723.0" layoutY="109.0" prefHeight="461.0" prefWidth="200.0" styleClass="list-cell" stylesheets="@../login_style.css" />
+      <Button layoutX="51.0" layoutY="589.0" mnemonicParsing="false" onAction="#send_message" styleClass="dark-blue" stylesheets="@../login_style.css" text="Send" />
+      <Button layoutX="739.0" layoutY="729.0" mnemonicParsing="false" onAction="#log_off" prefHeight="25.0" prefWidth="184.0" styleClass="round-red" stylesheets="@../login_style.css" text="Log Off" />
+      <TextField fx:id="user_message" layoutX="137.0" layoutY="589.0" prefHeight="25.0" prefWidth="568.0" promptText="Enter your message here" styleClass="text-field" stylesheets="@../login_style.css" />
+      <Button layoutX="723.0" layoutY="589.0" mnemonicParsing="false" onAction="#create_private_box" prefHeight="35.0" prefWidth="200.0" styleClass="dark-blue" stylesheets="@../login_style.css" text="create private box" />
+      <Text fx:id="user_name_text" fill="WHITE" layoutX="59.0" layoutY="63.0" stroke="#120101de" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="20.0" text="Welcome : ">
          <font>
             <Font size="17.0" />
          </font>
