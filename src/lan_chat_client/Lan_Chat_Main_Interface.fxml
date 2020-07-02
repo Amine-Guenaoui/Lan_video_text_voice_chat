@@ -23,7 +23,7 @@
       <ListView fx:id="logged_isers_list_view" layoutX="723.0" layoutY="109.0" prefHeight="461.0" prefWidth="200.0" styleClass="list-cell" stylesheets="@../login_style.css" />
       <Button layoutX="51.0" layoutY="589.0" mnemonicParsing="false" onAction="#send_message" styleClass="dark-blue" stylesheets="@../login_style.css" text="Send" />
       <Button layoutX="739.0" layoutY="729.0" mnemonicParsing="false" onAction="#log_off" prefHeight="25.0" prefWidth="184.0" styleClass="round-red" stylesheets="@../login_style.css" text="Log Off" />
-      <TextField fx:id="user_message" layoutX="137.0" layoutY="589.0" prefHeight="25.0" prefWidth="568.0" promptText="Enter your message here" styleClass="text-field" stylesheets="@../login_style.css" />
+      <TextField fx:id="user_message" layoutX="137.0" layoutY="589.0" prefHeight="25.0" prefWidth="568.0" promptText="Enter your message here" styleClass="text-area" stylesheets="@../login_style.css" />
       <Button layoutX="723.0" layoutY="589.0" mnemonicParsing="false" onAction="#create_private_box" prefHeight="35.0" prefWidth="200.0" styleClass="dark-blue" stylesheets="@../login_style.css" text="create private box" />
       <Text fx:id="user_name_text" fill="WHITE" layoutX="59.0" layoutY="63.0" stroke="#120101de" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="20.0" text="Welcome : ">
          <font>
