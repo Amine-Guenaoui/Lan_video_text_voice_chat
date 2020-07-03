@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Server.java</file>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Lan_Chat_Client.java</file>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Video_Audio.java</file>
             <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Private_Messages_Box_Interface_Controller.java</file>
             <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Private_Video_Sharing_Interface_Controller.java</file>
-            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Chat_Private_Messages_Boxes.java</file>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/P_Box.java</file>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/FXML_Login_Client_Controller.java</file>
+            <file>file:/C:/Users/amino/Documents/NetBeansProjects/Lan_Chat_Client/src/lan_chat_client/Lan_Chat_Main_Interface_Controller.java</file>
         </group>
     </open-files>
 </project-private>

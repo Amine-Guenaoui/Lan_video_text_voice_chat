@@ -38,7 +38,7 @@ public class FXML_Login_Client_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // getting object 
-        String location = "rmi://192.168.1.4:1099/"; 
+        String location = "rmi://192.168.1.2:1099/"; 
         try {
             
             stub = Naming.lookup(location+"Chat_logger");

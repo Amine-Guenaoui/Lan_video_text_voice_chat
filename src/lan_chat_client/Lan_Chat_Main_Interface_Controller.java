@@ -62,7 +62,7 @@ public class Lan_Chat_Main_Interface_Controller implements Initializable {
         my_not_opened_boxes = new LinkedList<P_Box>();
         me = FXML_Login_Client_Controller.me;
         user_name_text.setText(user_name_text.getText()+" "+me.getName());
-        String location = "rmi://192.168.1.4:1099/"; 
+        String location = "rmi://192.168.1.2:1099/"; 
         try {
             logger_stub = Naming.lookup(location+"Chat_logger");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Chat_logger");
