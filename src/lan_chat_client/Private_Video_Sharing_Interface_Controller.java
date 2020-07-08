@@ -57,7 +57,7 @@ public class Private_Video_Sharing_Interface_Controller implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //System.loadLibrary( "C:/Users/amino/Desktop/MIV/opencv/opencv/build/java/x64/opencv_java430.dll" );
-        String location = "rmi://192.168.1.2:1099/";
+        String location = FXML_Login_Client_Controller.location;
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat matrix = new Mat();
         me = FXML_Login_Client_Controller.me;

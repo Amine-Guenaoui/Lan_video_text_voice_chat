@@ -61,7 +61,7 @@ public class Private_Messages_Box_Interface_Controller implements Initializable 
         self_box = Lan_Chat_Main_Interface_Controller.my_not_opened_boxes.remove();// removing from not opened boxes
         //Lan_Chat_Main_Interface_Controller.my_not_opened_boxes.add(self_box); // adding to already opened boxes
         p_box_title_text.setText(p_box_title_text.getText()+" "+self_box.getName());
-        String location = "rmi://192.168.1.2:1099/"; 
+        String location = "rmi://192.168.1.4:1099/"; 
         for (User user :self_box.getConcerned_users()){
                         private_box_users_list_view.getItems().add(user);
         }

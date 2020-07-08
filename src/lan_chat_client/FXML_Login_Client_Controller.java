@@ -9,6 +9,7 @@ import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,12 +36,24 @@ public class FXML_Login_Client_Controller implements Initializable {
     
     Remote stub;
     public static User me;
+    public static String location;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // getting object 
-        String location = "rmi://192.168.1.2:1099/"; 
-        try {
+        location = "";
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Launching ");
+        dialog.setHeaderText("Server Domain Input ");
+        dialog.setContentText("Please the server domain: like 192.168.1.4");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+         
+            System.out.println("the domain: ." + result.get()+".");
+            location = "rmi://"+result.get().replaceAll("\\s+","")+":1099/";
+            try {
             
             stub = Naming.lookup(location+"Chat_logger");
             //stub = Naming.lookup("rmi://"+InetAddress.getLocalHost().getHostAddress()+"/Notes");
@@ -47,6 +61,9 @@ public class FXML_Login_Client_Controller implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        }
+        location = "rmi://192.168.1.4:1099/";
+        
     }    
 
     @FXML

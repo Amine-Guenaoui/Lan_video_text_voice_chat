@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" java-vm-args="-Djava.library.path="C:\Users\amino\Desktop\MIV\opencv\opencv\build\java\x64" "  href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Lan_Chat_Client.jar" size="175418" download="eager" />
+    <jar href="Lan_Chat_Client.jar" size="175830" download="eager" />
     <jar href="lib\opencv-430.jar" size="652090" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="lan_chat_client.Lan_Chat_Client"  name="Lan_Chat_Client" />
